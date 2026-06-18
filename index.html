@@ -25,7 +25,24 @@
 
   overflow:hidden;
 }
+.gateStars {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(white 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.3;
+    animation: starsMove 20s linear infinite;
+}
 
+@keyframes starsMove {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-100px);
+    }
+}
 
 .gateBox{
 
@@ -828,7 +845,6 @@ width:100%;
 </head>
 <body>
 <!-- ================= LOVE GATE START ================= -->
-
 <div id="loveGate">
 
   <div class="gateStars"></div>
@@ -1333,11 +1349,11 @@ window.addEventListener('scroll', () => {
     const alpha = Math.random() * 0.5 + 0.2;
     el.style.cssText = `
       width: ${size}px; height: ${size}px;
-      background: ${color}${alpha});
+      background: ${color}${alpha};
       left: ${Math.random() * 100}%;
       animation-duration: ${Math.random() * 15 + 10}s;
       animation-delay: ${Math.random() * 5}s;
-      box-shadow: 0 0 ${size * 2}px ${color}${alpha * 0.8});
+      box-shadow: 0 0 ${size * 2}px ${color}${alpha * 0.8};
     `;
     container.appendChild(el);
     setTimeout(() => el.remove(), 25000);
@@ -1365,6 +1381,83 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
   });
 });
+  // ================= LOVE GATE =================
+
+const message = document.getElementById("message");
+
+function checkAnswer(step, correct) {
+
+    if (!correct) {
+        const texts = [
+            "هەوڵی دیکە بدە 😄",
+            "هێشتا باشم ناناسیت 😜",
+            "جارێکی تر هەوڵ بدە 🧡"
+        ];
+
+        message.innerHTML =
+            texts[Math.floor(Math.random() * texts.length)];
+
+        return;
+    }
+
+    message.innerHTML = "زۆر باشە ❤️";
+
+    if (step === 1) {
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+    }
+
+    if (step === 2) {
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step3").classList.remove("hidden");
+    }
+}
+
+
+// Moving NO button
+
+const noBtn = document.getElementById("noBtn");
+
+function moveNoButton() {
+
+    const x =
+        Math.random() * (window.innerWidth - 120);
+
+    const y =
+        Math.random() * (window.innerHeight - 70);
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+
+
+// YES button
+
+function enterLove() {
+
+    const gate = document.getElementById("loveGate");
+
+    gate.style.transition = "1.5s";
+
+    gate.style.opacity = "0";
+
+    setTimeout(() => {
+
+        gate.style.display = "none";
+
+        document.body.style.overflowY = "auto";
+
+    }, 1500);
+}
+
+
+// Prevent scrolling before entering
+
+document.body.style.overflow = "hidden";
 </script>
 </body>
 </html>
