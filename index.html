@@ -369,6 +369,7 @@ width:100%;
     width: 1px; height: 50px;
     background: linear-gradient(to bottom, var(--gold), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
+    transform-origin: top;
   }
 
   /* ============ EYES SECTION ============ */
@@ -804,11 +805,17 @@ width:100%;
     50% { opacity: 1; transform: scale(1.1); }
   }
 
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(0.7); }
-    transform-origin: top;
+ @keyframes scrollPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleY(1);
   }
+
+  50% {
+    opacity: 1;
+    transform: scaleY(0.7);
+  }
+}
 
   @keyframes starTwinkle {
     0%, 100% { opacity: 0.3; transform: scale(0.8); }
@@ -1418,6 +1425,10 @@ function checkAnswer(step, correct) {
 
 const noBtn = document.getElementById("noBtn");
 
+if(noBtn){
+  noBtn.addEventListener("mouseover", moveNoButton);
+  noBtn.addEventListener("click", moveNoButton);
+}
 function moveNoButton() {
 
     const x =
